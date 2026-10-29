@@ -1,0 +1,6 @@
+{
+  "enabledPlugins": {
+    "context7@anthropic-plugin-directory": true,
+    "code-simplifier@anthropic-plugin-directory": true
+  }
+}
