@@ -9,12 +9,17 @@ Plan and track expenses with category budgets and reports. See `CLAUDE.md` for t
 
 ## Running locally
 
-Requires Node 20+.
+Requires Node 20+ and Docker.
 
 ```bash
+# database (PostgreSQL 16 on localhost:5433)
+docker compose up -d
+
 # api (http://localhost:4000)
 cd api
+cp .env.example .env
 npm install
+npx prisma migrate dev   # creates the tables
 npm run dev
 
 # web (http://localhost:3000)

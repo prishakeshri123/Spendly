@@ -4,11 +4,11 @@
 
 - Frontend: Next.js (React) + TypeScript + Tailwind CSS + shadcn/ui + Recharts
 - Backend: Node.js + Fastify + TypeScript
-- Database: PostgreSQL
+- Database: PostgreSQL, run locally with `docker compose up -d` (host port 5433)
+- ORM: Prisma 7 (`api/prisma/schema.prisma`, config in `api/prisma.config.ts`, client generated to `api/src/generated/prisma`)
 
 ## Proposed (confirm before relying on them)
 
-- ORM: Prisma
 - Validation: Zod via `fastify-type-provider-zod`
 - Auth: `@fastify/jwt` with an httpOnly cookie, passwords hashed with `argon2`
 - API docs: `@fastify/swagger`
