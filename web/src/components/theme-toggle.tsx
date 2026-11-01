@@ -23,7 +23,11 @@ function getTheme(): Theme {
 }
 
 export function ThemeToggle() {
-  const theme = useSyncExternalStore(subscribe, getTheme, () => "light" as Theme);
+  const theme = useSyncExternalStore(
+    subscribe,
+    getTheme,
+    () => "light" as Theme,
+  );
   const next: Theme = theme === "dark" ? "light" : "dark";
 
   function toggle() {

@@ -82,7 +82,8 @@
   --shadow-raised:
     6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
   --shadow-inset:
-    inset 4px 4px 8px var(--shadow-dark), inset -4px -4px 8px var(--shadow-light);
+    inset 4px 4px 8px var(--shadow-dark),
+    inset -4px -4px 8px var(--shadow-light);
   --shadow-flat: none;
 
   --font-sans: var(--font-geist-sans);

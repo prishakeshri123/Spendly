@@ -57,15 +57,30 @@ export default function DesignPage() {
         <Card className="flex flex-col gap-4">
           <h2 className="font-semibold">Progress bars</h2>
           <div className="flex flex-col gap-1">
-            <ProgressBar value={40} max={100} label="Transport budget" tone="success" />
+            <ProgressBar
+              value={40}
+              max={100}
+              label="Transport budget"
+              tone="success"
+            />
             <p className="text-sm">Transport: on track, $60 left</p>
           </div>
           <div className="flex flex-col gap-1">
-            <ProgressBar value={85} max={100} label="Groceries budget" tone="warning" />
+            <ProgressBar
+              value={85}
+              max={100}
+              label="Groceries budget"
+              tone="warning"
+            />
             <p className="text-sm">Groceries: near limit, $15 left</p>
           </div>
           <div className="flex flex-col gap-1">
-            <ProgressBar value={112} max={100} label="Fun budget" tone="danger" />
+            <ProgressBar
+              value={112}
+              max={100}
+              label="Fun budget"
+              tone="danger"
+            />
             <p className="text-sm">Fun: over by $12</p>
           </div>
         </Card>
