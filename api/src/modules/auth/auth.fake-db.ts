@@ -1,4 +1,5 @@
 import type { PrismaClient } from "../../generated/prisma/client.js";
+import { createFakeAccountTable } from "../accounts/accounts.fake-db.js";
 
 interface Row {
   id: string;
@@ -59,5 +60,14 @@ export function createFakeDb() {
     },
   };
 
-  return { rows, db: { user } as unknown as Pick<PrismaClient, "user"> };
+  const accounts = createFakeAccountTable();
+
+  return {
+    rows,
+    accountRows: accounts.rows,
+    db: { user, account: accounts.account } as unknown as Pick<
+      PrismaClient,
+      "user" | "account"
+    >,
+  };
 }
