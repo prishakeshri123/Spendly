@@ -40,8 +40,15 @@ Tables: User, Account, Category, Transaction, Budget.
 # api
 npm run dev        # start Fastify in watch mode
 npm run build
+npm run lint
+npm run typecheck
+npm test           # Vitest
+npm run format:check
 npx prisma migrate dev
 
 # web
 npm run dev        # start Next.js
+npm run lint
+npm run typecheck
+npm run format:check
 ```
