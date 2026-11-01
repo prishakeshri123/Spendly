@@ -1,13 +1,13 @@
 ---
 name: start-issue
-description: Start work on a GitHub issue. Reads the issue, explains the plan and which files/modules it will impact, implements after approval, then gives a recap of the changes before any PR is raised.
+description: Start work on a GitHub issue. Reads the issue, explains the plan and which files/modules it will impact, implements after approval without committing, teaches the finished code like a tutor, then gives a recap before any PR is raised.
 argument-hint: <issue number or URL>
 disable-model-invocation: true
 ---
 
 # Start Issue
 
-Work on GitHub issue `$ARGUMENTS` for this repo. There are two approval gates: the plan, and the recap. Never skip either.
+Work on GitHub issue `$ARGUMENTS` for this repo. There are two approval gates: the plan, and the recap. Never skip either. Never commit unless the user asks.
 
 ## 1. Read the issue
 
@@ -34,11 +34,25 @@ Read the relevant code first (Grep/Read; use the Explore agent for broad sweeps)
 - Follow CLAUDE.md conventions and match surrounding code. Keep the change within the approved plan; if scope grows, stop and tell the user.
 - Add or update tests (Vitest for services, Fastify `inject` for routes).
 - Run the typecheck, lint and tests that exist (`npm run build`, `npm test` in `api/` and/or `web/`) and report real results.
-- Commit in small, focused commits, each message referencing the issue (e.g. `Add X (#12)`). Do not push yet.
+- **Do not commit or push.** Leave all changes uncommitted in the working tree for the user to review.
 
-## 4. Recap before the PR (gate 2: stop here)
+## 4. Explain the code like a tutor
 
-Gather the facts from `git diff main...HEAD --stat` and `git log main..HEAD --oneline`, then present:
+After implementation and verification, and before the recap, teach what was built. Assume the reader knows nothing: define every term the first time it appears, and never say "simply" or "obviously". Walk through the code in the order a request flows (or the order the pieces run), file by file. For each concept, library, pattern or design choice, cover:
+
+- **What it is**: plain-language definition, with an analogy where it helps.
+- **What the code does**: quote the small relevant snippet and explain it line by line.
+- **A concrete example**: a real input and what happens step by step, including the failure case (e.g. user A requests user B's account and gets a 404).
+- **Why we use it / the advantage**: what problem it solves here.
+- **What happens if we don't use it**: the concrete bug, risk or cost (e.g. floats for money give `0.1 + 0.2 = 0.30000000000000004`).
+- **Industry practice**: how this is normally done in production codebases.
+- **Alternatives**: other ways to do it, with the trade-offs, and why we chose this one.
+
+Cover every non-obvious choice in the change (validation, auth, `userId` scoping, soft delete, integer money, transactions, test doubles, and so on). Skip nothing because it seems small. Finish with a short "key takeaways" list.
+
+## 5. Recap before the PR (gate 2: stop here)
+
+Gather the facts from `git status --short` and `git diff HEAD --stat` (changes are uncommitted), then present:
 
 - **What changed**: per file or module, in plain language.
 - **How it maps to the plan**: done, deviated (and why), or deferred.
@@ -46,4 +60,4 @@ Gather the facts from `git diff main...HEAD --stat` and `git log main..HEAD --on
 - **Risks and follow-ups**: migrations to apply, env changes, known gaps.
 - **Draft PR**: title and description (summary, `Closes #<n>`, test plan). Check for a PR template (`.github/pull_request_template.md`) and follow it.
 
-**Do not push or open the PR until the user explicitly approves.** On approval: push the branch, then create the PR with `mcp__github__create_pull_request` against `main`, and share the link.
+**Do not commit, push or open the PR until the user explicitly asks.** Only when they do: commit in small, focused commits (each message referencing the issue, e.g. `Add X (#12)`), push the branch, then create the PR with `mcp__github__create_pull_request` against `main`, and share the link.
