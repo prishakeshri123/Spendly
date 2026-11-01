@@ -15,6 +15,9 @@ export class AppError extends Error {
 export const unauthorized = (message = "Authentication required") =>
   new AppError(401, "UNAUTHORIZED", message);
 
+export const notFound = (code: string, message: string) =>
+  new AppError(404, code, message);
+
 export function registerErrorHandler(app: FastifyInstance) {
   app.setErrorHandler((error, request, reply) => {
     if (error instanceof AppError) {
