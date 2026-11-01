@@ -1,6 +1,6 @@
 ---
 name: start-issue
-description: Start work on a GitHub issue. Reads the issue, explains the plan and which files/modules it will impact, implements after approval, then gives a recap of the changes before any PR is raised.
+description: Start work on a GitHub issue. Reads the issue, explains the plan and which files/modules it will impact, implements after approval and leaves the changes uncommitted for review, then gives a recap before anything is committed or any PR is raised.
 argument-hint: <issue number or URL>
 disable-model-invocation: true
 ---
@@ -34,11 +34,11 @@ Read the relevant code first (Grep/Read; use the Explore agent for broad sweeps)
 - Follow CLAUDE.md conventions and match surrounding code. Keep the change within the approved plan; if scope grows, stop and tell the user.
 - Add or update tests (Vitest for services, Fastify `inject` for routes).
 - Run the typecheck, lint and tests that exist (`npm run build`, `npm test` in `api/` and/or `web/`) and report real results.
-- Commit in small, focused commits, each message referencing the issue (e.g. `Add X (#12)`). Do not push yet.
+- **Do not commit.** Leave all changes uncommitted in the working tree (unstaged or staged, but not committed) so the user can review them in the diff. Do not push.
 
-## 4. Recap before the PR (gate 2: stop here)
+## 4. Recap before committing (gate 2: stop here)
 
-Gather the facts from `git diff main...HEAD --stat` and `git log main..HEAD --oneline`, then present:
+Gather the facts from `git status` and `git diff --stat` (plus `git diff` as needed), then present:
 
 - **What changed**: per file or module, in plain language.
 - **How it maps to the plan**: done, deviated (and why), or deferred.
@@ -46,4 +46,4 @@ Gather the facts from `git diff main...HEAD --stat` and `git log main..HEAD --on
 - **Risks and follow-ups**: migrations to apply, env changes, known gaps.
 - **Draft PR**: title and description (summary, `Closes #<n>`, test plan). Check for a PR template (`.github/pull_request_template.md`) and follow it.
 
-**Do not push or open the PR until the user explicitly approves.** On approval: push the branch, then create the PR with `mcp__github__create_pull_request` against `main`, and share the link.
+**Do not commit, push or open the PR until the user explicitly approves.** On approval: commit in small, focused commits, each message referencing the issue (e.g. `Add X (#12)`), push the branch, then create the PR with `mcp__github__create_pull_request` against `main`, and share the link.
