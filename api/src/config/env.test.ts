@@ -20,10 +20,14 @@ describe("loadEnv", () => {
   });
 
   it("rejects a short JWT_SECRET", () => {
-    expect(() => loadEnv({ ...valid, JWT_SECRET: "short" })).toThrow(/JWT_SECRET/);
+    expect(() => loadEnv({ ...valid, JWT_SECRET: "short" })).toThrow(
+      /JWT_SECRET/,
+    );
   });
 
   it("rejects a missing DATABASE_URL", () => {
-    expect(() => loadEnv({ JWT_SECRET: valid.JWT_SECRET })).toThrow(/DATABASE_URL/);
+    expect(() => loadEnv({ JWT_SECRET: valid.JWT_SECRET })).toThrow(
+      /DATABASE_URL/,
+    );
   });
 });
