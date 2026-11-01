@@ -1,26 +1,97 @@
 @import "tailwindcss";
 
+/*
+ * Theme tokens. Light is the default; dark applies when the user picks it
+ * (data-theme="dark") or, with no choice stored, when the OS prefers dark.
+ * Shadow colors are separate per theme: neumorphism needs a light and a dark
+ * shadow that are tuned to the surface, not plain black/white.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #e6e9ef;
+  --surface: #e6e9ef;
+  --foreground: #1f2430; /* 11.7:1 on surface */
+  --muted: #4a5262; /* 6.4:1 on surface */
+  --divider: #c5cad6;
+
+  --accent: #4f46e5;
+  --accent-foreground: #ffffff; /* 6.3:1 on accent */
+  --focus: #4f46e5;
+
+  --success: #166534;
+  --warning: #92400e;
+  --danger: #b91c1c;
+
+  --shadow-dark: #c1c6d3;
+  --shadow-light: #ffffff;
+}
+
+:root[data-theme="dark"] {
+  --background: #23272f;
+  --surface: #23272f;
+  --foreground: #e8eaf0; /* 12:1 on surface */
+  --muted: #aab0bd; /* 6.9:1 on surface */
+  --divider: #3a404c;
+
+  --accent: #818cf8;
+  --accent-foreground: #12141a; /* 6.6:1 on accent */
+  --focus: #a5b4fc;
+
+  --success: #86efac;
+  --warning: #fcd34d;
+  --danger: #fca5a5;
+
+  --shadow-dark: #181b21;
+  --shadow-light: #2e333d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: #23272f;
+    --surface: #23272f;
+    --foreground: #e8eaf0;
+    --muted: #aab0bd;
+    --divider: #3a404c;
+
+    --accent: #818cf8;
+    --accent-foreground: #12141a;
+    --focus: #a5b4fc;
+
+    --success: #86efac;
+    --warning: #fcd34d;
+    --danger: #fca5a5;
+
+    --shadow-dark: #181b21;
+    --shadow-light: #2e333d;
+  }
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-divider: var(--divider);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-focus: var(--focus);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+
+  /* The only three shadow states: raised, inset, flat. */
+  --shadow-raised:
+    6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+  --shadow-inset:
+    inset 4px 4px 8px var(--shadow-dark),
+    inset -4px -4px 8px var(--shadow-light);
+  --shadow-flat: none;
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
