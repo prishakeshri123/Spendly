@@ -6,13 +6,14 @@
 - Backend: Node.js + Fastify + TypeScript
 - Database: PostgreSQL, run locally with `docker compose up -d` (host port 5433)
 - ORM: Prisma 7 (`api/prisma/schema.prisma`, config in `api/prisma.config.ts`, client generated to `api/src/generated/prisma`)
+- Auth: `@fastify/jwt` with an httpOnly cookie (`@fastify/cookie`), passwords hashed with `argon2` (pinned to 0.41.x: 0.45's prebuilt binary crashed on Windows/Node 20)
+- Security: `@fastify/cors`, `@fastify/rate-limit`
+- Validation: Zod, parsed in route handlers (`schema.parse`); errors map to 400 in `utils/errors.ts`
 
 ## Proposed (confirm before relying on them)
 
-- Validation: Zod via `fastify-type-provider-zod`
-- Auth: `@fastify/jwt` with an httpOnly cookie, passwords hashed with `argon2`
 - API docs: `@fastify/swagger`
-- Security: `@fastify/helmet`, `@fastify/cors`, `@fastify/rate-limit`
+- Security: `@fastify/helmet`
 - Later: Redis + BullMQ for recurring bills and alerts
 
 ## Repository layout
